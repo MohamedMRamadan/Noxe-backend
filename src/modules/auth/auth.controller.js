@@ -61,8 +61,9 @@ export const signin = catchAsynErr(async (req, res, next) => {
     },
     process.env.SECRET_KEY
   );
-
   if (!token) return next(new AppErr("Failed to sign token", 400));
+  user.status = "staible";
+  await user.save();
   res.status(200).json({ message: "Done", token });
 });
 export const forgotPassword = catchAsynErr(async (req, res, next) => {
